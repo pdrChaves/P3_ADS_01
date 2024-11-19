@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1732057314 source:c:\users\pedro\downloads\programação\projeto_1ads\projeto_ads1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
