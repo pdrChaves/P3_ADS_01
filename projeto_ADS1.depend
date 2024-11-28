@@ -1,7 +1,25 @@
 # depslib dependency file v1.0
-1732233173 source:c:\users\pedro\downloads\programa��o\projeto_1ads\projeto_ads1\main.c
+1732233173 source:c:\users\pedro\downloads\programação\projeto_1ads\projeto_ads1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	<string.h>
+
+1732497956 source:c:\users\pedro\downloads\programação\projeto_1ads\p3_ads_01\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"Funções/funcoes.h"
+
+1732498347 c:\users\pedro\downloads\programação\projeto_1ads\p3_ads_01\funções\funcoes.h
+
+1732752776 source:c:\users\pedro\downloads\programação\projeto_1ads\p3_adsv2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"Funções/funcoes.h"
+
+1732752220 c:\users\pedro\downloads\programação\projeto_1ads\p3_adsv2\funções\funcoes.h
 
