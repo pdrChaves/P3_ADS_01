@@ -1,42 +1,57 @@
-Chamado;
+#define MAX_CHAMADOS 100
+
+typedef struct {
+int codigo;
+char setor[50];
+char solicitante[50];
+struct tm horario;
+} Chamado;
 
 Chamado chamados[MAX_CHAMADOS];
-int totalChamados = 0;
+    int totalChamados = 0;
 
-void cadastrarChamado() {
+    void exibirHoraAtual() {
+    time_t agora = time(NULL);
+    struct tm *horaAtual = localtime(&agora);
+    printf("Data e hora atual: %02d/%02d/%04d %02d:%02d\n\n",
+           horaAtual->tm_mday, horaAtual->tm_mon + 1, horaAtual->tm_year + 1900,
+           horaAtual->tm_hour, horaAtual->tm_min, horaAtual->tm_sec);
+}
+
+    void cadastrarChamado() {
     if (totalChamados < MAX_CHAMADOS) {
         Chamado novoChamado;
-    printf("Digite o tipo de ocorrencia:\n");
-    printf("911 - Falha de conexao - Internet\n");
-    printf("912 - Problema com impressora\n");
-    printf("913 - Usuario sem senha\n");
-    printf("914 - Problemas na rede interna\n");
-    printf("915 - Computador nao liga\n");
+        printf("Digite o tipo de ocorrencia:\n");
+        printf("911 - Falha de conexao - Internet\n");
+        printf("912 - Problema com impressora\n");
+        printf("913 - Usuario sem senha\n");
+        printf("914 - Problemas na rede interna\n");
+        printf("915 - Computador nao liga\n");
         scanf("%d", &novoChamado.codigo);
         getchar();
-        if  (novoChamado.codigo == 911 || novoChamado.codigo == 912 ||
-            novoChamado.codigo == 913 || novoChamado.codigo == 914 ||
-            novoChamado.codigo == 915){
-        printf("Digite o setor ou departamento: ");
-        fgets(novoChamado.setor, 50, stdin);
-        novoChamado.setor[strcspn(novoChamado.setor, "\n")] = 0;
 
-        printf("Digite o nome do solicitante: ");
-        fgets(novoChamado.solicitante, 50, stdin);
-        novoChamado.solicitante[strcspn(novoChamado.solicitante, "\n")] = 0;
+        if (novoChamado.codigo >= 911 && novoChamado.codigo <= 915) {
+            printf("Digite o setor ou departamento: ");
+            fgets(novoChamado.setor, 50, stdin);
+            novoChamado.setor[strcspn(novoChamado.setor, "\n")] = 0;
 
+            printf("Digite o nome do solicitante: ");
+            fgets(novoChamado.solicitante, 50, stdin);
+            novoChamado.solicitante[strcspn(novoChamado.solicitante, "\n")] = 0;
 
-        chamados[totalChamados++] = novoChamado;
-        printf("Chamado cadastrado com sucesso!\n");
-}
-        else if ((chamados !=911) || (912) || (913) || (914) || (915)) {
-            printf("Opcao invalida. \n");
+            time_t agora = time(NULL);
+            novoChamado.horario = *localtime(&agora);
+
+            chamados[totalChamados++] = novoChamado;
+            printf("Chamado cadastrado com sucesso\n");
             }
+        else {
+            printf("Opcao invalida.\n");
+        }
     }
         else {
         printf("Limite de chamados atingido.\n");
-
-}
+    }
 }
 
 void exibirTotalChamados() {
@@ -60,7 +75,7 @@ void exibirOcorrenciaMaisSolicitada() {
     printf("Tipo de ocorrencia mais solicitada: %d com %d chamados.\n", tipoMaisSolicitado, maxOcorrencias);
 }
 
-void listarChamados() {
+    void listarChamados() {
     FILE *arquivo = fopen("chamados.txt", "w");
 
     if (arquivo == NULL) {
@@ -70,18 +85,15 @@ void listarChamados() {
 
     printf("Lista de chamados cadastrados:\n");
     for (int i = 0; i < totalChamados; i++) {
-        struct tm *tempo;
-        time_t mytime;
-        mytime = time(NULL);
-        struct tm tm = *localtime(&mytime);
-        printf("Data: %d/%d/%d\n", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        fprintf(arquivo, "Codigo: %d\nSetor: %s\nSolicitante: %s\nData: %02d/%02d/%04d\nHora: %02d:%02d\n\n",
+                chamados[i].codigo, chamados[i].setor, chamados[i].solicitante,
+                chamados[i].horario.tm_mday, chamados[i].horario.tm_mon + 1, chamados[i].horario.tm_year + 1900,
+                chamados[i].horario.tm_hour, chamados[i].horario.tm_min, chamados[i].horario.tm_sec);
 
-        fprintf(arquivo, "Código: %d, Setor: %s, Solicitante: %s, Data: %d, Hora: %d \n",
-                chamados[i].codigo, chamados[i].setor, chamados[i].solicitante);
-
-        printf("Código: %d, Setor: %s, Solicitante: %s, Data: %d, Hora: %d \n",
-               chamados[i].codigo, chamados[i].setor, chamados[i].solicitante);
-
+        printf("Codigo: %d\nSetor: %s\nSolicitante: %s\nData: %02d/%02d/%04d\nHora: %02d:%02d\n\n",
+               chamados[i].codigo, chamados[i].setor, chamados[i].solicitante,
+               chamados[i].horario.tm_mday, chamados[i].horario.tm_mon + 1, chamados[i].horario.tm_year + 1900,
+               chamados[i].horario.tm_hour, chamados[i].horario.tm_min, chamados[i].horario.tm_sec);
     }
 
     fclose(arquivo);
